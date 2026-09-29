@@ -24,12 +24,13 @@ export default function FindScreen() {
   const palette = usePalette();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { place, set } = useSky();
+  const { place, timeOffset, set } = useSky();
   const [q, setQ] = useState("");
   const now = useMinute();
 
+  // Positions for the moment the sky is showing, time travel included.
   const items = useMemo(() => {
-    const jd = julianDay(now);
+    const jd = julianDay(new Date(now.getTime() + timeOffset));
     const obs = { lat: place.lat, lon: place.lon };
     const where = (alt: number, az: number) => (alt > 0 ? `${Math.round(alt)}° up, ${compass(az)}` : "below the horizon");
     const bodies: Item[] = [];
@@ -51,7 +52,7 @@ export default function FindScreen() {
       })
       .sort((a, b) => a.name.localeCompare(b.name));
     return { bodies, stars, figures };
-  }, [place, now]);
+  }, [place, now, timeOffset]);
 
   const needle = q.trim().toLowerCase();
   const match = (i: Item) => !needle || i.name.toLowerCase().includes(needle);
