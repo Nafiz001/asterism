@@ -27,7 +27,7 @@ export default function TonightScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { place, redMode, set } = useSky();
-  const sats = useSatellites();
+  const { satellites: sats, failed: satsFailed } = useSatellites();
   const [weather, setWeather] = useState<HourForecast[] | null>(null);
   const [weatherFailed, setWeatherFailed] = useState(false);
   const [reminded, setReminded] = useState<Record<string, boolean>>({});
@@ -158,7 +158,11 @@ export default function TonightScreen() {
 
       <View style={card}>
         <Text style={[styles.h2, { color: palette.ink }]}>Space stations</Text>
-        {sats.length === 0 && <Text style={[styles.body, { color: palette.soft }]}>Getting the latest orbits from CelesTrak…</Text>}
+        {sats.length === 0 && (
+          <Text style={[styles.body, { color: palette.soft }]}>
+            {satsFailed ? "Couldn't get the orbits from CelesTrak. Passes will show once the phone is back online." : "Getting the latest orbits from CelesTrak…"}
+          </Text>
+        )}
         {sats.length > 0 && plan.passes.length === 0 && (
           <Text style={[styles.body, { color: palette.soft }]}>No visible passes in the next three days. They are only visible at dusk and dawn, lit by a Sun you can&apos;t see.</Text>
         )}

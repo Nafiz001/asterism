@@ -53,7 +53,7 @@ export function SkyScreen() {
   const palette = usePalette();
   const router = useRouter();
   const s = useSky();
-  const satellites = useSatellites();
+  const { satellites } = useSatellites();
   const [picked, setPicked] = useState<Picked | null>(null);
   const [cameraPermission, requestCamera] = useCameraPermissions();
 

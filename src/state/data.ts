@@ -32,15 +32,20 @@ async function cached<T>(key: string, maxAgeMs: number, load: () => Promise<T>):
 const TLE_URL = "https://celestrak.org/NORAD/elements/gp.php?GROUP=stations&FORMAT=tle";
 const KEEP = /^(ISS \(ZARYA\)|CSS \(TIANHE\)|TIANGONG)/;
 
-export function useSatellites(): Satellite[] {
+/** The satellites, and whether their orbits couldn't be fetched (nor were cached). */
+export function useSatellites(): { satellites: Satellite[]; failed: boolean } {
   const [sats, setSats] = useState<Satellite[]>([]);
+  const [failed, setFailed] = useState(false);
   useEffect(() => {
     cached("tle:stations", 12 * 3600_000, async () => {
       const res = await fetch(TLE_URL);
       if (!res.ok) throw new Error(`CelesTrak ${res.status}`);
       return res.text();
     }).then((text) => {
-      if (!text) return;
+      if (!text) {
+        setFailed(true);
+        return;
+      }
       const list = parseTle(text)
         .filter((t) => KEEP.test(t.name))
         .map(toSatellite)
@@ -49,7 +54,7 @@ export function useSatellites(): Satellite[] {
       setSats(list);
     });
   }, []);
-  return sats;
+  return { satellites: sats, failed };
 }
 
 export interface HourForecast {
