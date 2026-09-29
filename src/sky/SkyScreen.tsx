@@ -152,12 +152,16 @@ export function SkyScreen() {
       }
     };
     update();
-    // The eye adjusting to the dark: stars appear brightest first.
-    limit.set(-1.5);
-    limit.set(withTiming(limitTarget.current, { duration: 3200 }));
     const id = setInterval(update, 1000);
     return () => clearInterval(id);
   }, [satellites, s.place, s.timeOffset, s.redMode, bodies, skyTop, skyLow, limit]);
+
+  // The eye adjusting to the dark, once on opening: stars appear brightest
+  // first. Not on every time step or layer change, or the sky blinks.
+  useEffect(() => {
+    limit.set(-1.5);
+    limit.set(withTiming(limitTarget.current, { duration: 3200 }));
+  }, [limit]);
 
   // The target, from the Find tab, as a vector.
   useEffect(() => {
