@@ -16,7 +16,7 @@ the International Space Station will fly over.
   <img src="docs/demo.gif" width="300" alt="Stepping the sky from morning to evening as the stars come out, searching for Saturn, following the arrow to it, tapping it, switching to night vision, then tonight's forecast with the Moon, planets and space-station passes">
 </p>
 
-**[Watch it as a video](docs/demo.mp4)** (45 seconds): day turns to night,
+**[Download the video](docs/demo.mp4)** (MP4, 45 seconds, 3 MB): day turns to night,
 Find leads the way to Saturn, night vision, and tonight's forecast.
 
 - **The sky, live.** About 5,000 stars down to the faintest the eye can see,
