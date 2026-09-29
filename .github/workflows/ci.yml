@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx eslint .
+      - run: npx tsc --noEmit
+      # The astronomy against Meeus's worked examples, the sky's projection,
+      # satellite passes and tonight's planner.
+      - run: npx jest --ci
+      - run: npx expo-doctor
+      # The whole app, bundled for the web.
+      - run: npx expo export --platform web
