@@ -14,9 +14,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      # The lockfile is written by npm 11; npm 10 (bundled with Node 22) reads
-      # optional peer dependencies differently and rejects it.
-      - run: npm install -g npm@11
       - run: npm ci
       - run: npx eslint .
       - run: npx tsc --noEmit
