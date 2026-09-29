@@ -1,0 +1,68 @@
+{
+  "expo": {
+    "name": "Asterism",
+    "slug": "asterism",
+    "scheme": "asterism",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0a0f24",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.nafiz.asterism",
+      "infoPlist": {
+        "NSMotionUsageDescription": "Asterism uses motion to show the part of the sky your phone is pointing at."
+      }
+    },
+    "android": {
+      "package": "dev.nafiz.asterism",
+      "adaptiveIcon": {
+        "backgroundColor": "#0a0f24",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0a0f24",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Asterism uses your location to work out which stars are above you."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Asterism can show the sky over your camera's view, so you can match stars to the real sky.",
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#d4b16a"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
